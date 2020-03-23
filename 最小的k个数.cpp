@@ -31,10 +31,10 @@ namespace leetcode40 {
 			int left = low;
 			while (low < high)
 			{
-				while (low < high&&arr[high] >= base) {
+				while (low < high&&arr[high] >=base) {
 					--high;
 				}
-				while (low < high&&arr[low] <= base) {
+				while (low < high&&arr[low] <=base) {
 					++low;
 				}
 				if (low < high) {
@@ -51,6 +51,7 @@ namespace leetcode40 {
 		//时间 O(nlogk) 最多需要插入n次，每次插入要对k个数进行维护
 		//空间 O(k) 堆上最多k个
 		//利用最大堆的思想，没有修改原来的数组，比较适合处理海量数据
+		//堆排序
 		vector<int> getLeastNumbers1(vector<int>& arr, int k) {
 			if (arr.empty() || k <= 0)return vector<int>();
 			vector<int> res(k,0);
@@ -69,6 +70,20 @@ namespace leetcode40 {
 				res[i] = bigHeap.top();
 				bigHeap.pop();
 			}
+			return res;
+		}
+		//下面两种方法是利用STL中的partial_sort 实际上也是heap_sort
+		vector<int> getLeastNumbers2(vector<int>& arr, int k) {
+			if (arr.empty() || k <= 0)return vector<int>();
+			partial_sort(arr.begin(), arr.begin() + k, arr.end());
+			vector<int> res(arr.begin(), arr.begin() + k);
+			return res;
+		}
+
+		vector<int> getLeastNumbers3(vector<int>& arr, int k) {
+			if (arr.empty() || k <= 0)return vector<int>();
+			vector<int> res(k);
+			partial_sort_copy(arr.begin(), arr.end(), res.begin(), res.end());
 			return res;
 		}
 	};
