@@ -6,7 +6,7 @@ namespace leetcode160 {
   };
 	class Solution {
 	public:
-		//利用长度差，长的先走
+		//利用长度差，长的先走长度差，然后同时走
 		//时间复杂度O(m+n)
 		ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
 			if (headA == nullptr || headB == nullptr)return nullptr;
@@ -60,7 +60,7 @@ namespace leetcode160 {
 			if (headA == nullptr || headB == nullptr) return nullptr;
 			ListNode* curA = headA;
 			ListNode* curB = headB;
-			while (curA!=curB)
+			while (curA!=curB)//如果不相交同时到达尾节点，都是Nullptr
 			{
 				curA = curA == nullptr ? headB : curA->next;
 				curB = curB == nullptr ? headA : curB->next;

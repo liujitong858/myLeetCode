@@ -30,11 +30,12 @@ namespace leetcode912 {
 		//空间复杂度 : O(1)
 		//稳定
 		vector<int> sortArray1(vector<int>& nums) {
-			for (int i = (int)nums.size() - 1; i > 0; --i)
+			int size = nums.size()-1;
+			for (int i = 0;i<size;++i)
 			{
-				for (int j = 1; j <=i ; ++j)
+				for (int j = 0; j < size-i; ++j)
 				{
-					if (nums[j] < nums[j - 1])
+					if (nums[j] < nums[j + 1])
 					{
 						swap(nums[j], nums[j - 1]);
 					}
@@ -160,30 +161,21 @@ namespace leetcode912 {
 			return nums;
 		}
 		void maxHeapify(vector<int>& nums, int i, int len) {
-			while (i * 2+1 <= len){//当i存在孩子
 				int lson = i * 2 + 1;//左子结点的索引
 				int rson = i * 2 + 2;//右子结点的索引
-				int large=0;
+				int large=i;
 				//*******************找三个结点中最大的
-				if (lson <= len && nums[lson] > nums[i]) {
-					large = lson;
-				}
-				else {
-					large = i;
-				}
-				if (rson <= len && nums[rson] > nums[large]) {
-					large = rson;
-				}//********************找三个结点中最大的
+				if (lson <= len && nums[lson] > nums[i]) large = lson;
+				if (rson <= len && nums[rson] > nums[large]) large = rson;		
+				//********************找三个结点中最大的
 				if (large != i) {//更新最大值
 					swap(nums[i], nums[large]);
-					i = large;
+					maxHeapify(nums, large, len);
 					//并再循环一遍判断交换后的左右结点位置是否破坏了堆结构
 				    //若此时节点不是最大值, 则有可能也小于
 					//<以该节点为根的下一个子堆>的孩子节点
 					//所以需要将该节点也进行一次下沉操作
-				}
-				else break;	//如果最大值就是自己说明已经是最大堆，返回
-			}
+				}	
 		}
 		//建立最大堆
 		void buildMaxHeap(vector<int>& nums, int len) {
@@ -197,8 +189,7 @@ namespace leetcode912 {
 			buildMaxHeap(nums, len);
 			for (int i = len; i > 0; --i) {//只需要再排n-1次
 				swap(nums[i], nums[0]);  // 出堆(将最大值放置数组尾,堆size - 1)
-				len-=1;				     // 不需要考虑最后的最大值了
-				maxHeapify(nums, 0, len);// 将根执行下沉操作/重新构建
+				maxHeapify(nums, 0, i);// 将根执行下沉操作/重新构建
 			}
 		}
 	};

@@ -40,7 +40,7 @@ namespace leetcode23 {
 			cur->next = (l1 == nullptr) ? l2 : l1;
 			return newHead;
 		}
-		//空间复杂度：递归会使用到 O(\log k)O(logk) 空间代价的栈空间。
+		//空间复杂度：递归会使用到 O(logk) 空间代价的栈空间。
 
 		ListNode* merge(vector <ListNode*> &lists, int l, int r) {
 			if (l == r) return lists[l];
